@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Wand2, 
   Sparkles, 
-  Send, 
   AlertCircle, 
-  CheckCircle2, 
-  Lock,
-  ArrowRight,
-  RotateCcw
+  Lock
 } from 'lucide-react';
 import { Header } from './components/Header';
 import { TopInputCard } from './components/TopInputCard';
-import { TabNavigation, ActiveTab } from './components/TabNavigation';
+import { TabNavigation } from './components/TabNavigation';
 import { ReelLinkInput } from './components/AnalyzeTab/ReelLinkInput';
 import { VideoDropzone } from './components/AnalyzeTab/VideoDropzone';
 import { CaptionTemplateCard } from './components/AnalyzeTab/CaptionTemplateCard';
 import { CaptionInput } from './components/AnalyzeTab/CaptionInput';
 import { CreativeIdeaInput } from './components/AnalyzeTab/CreativeIdeaInput';
 import { AnalysisResults } from './components/AnalyzeTab/AnalysisResults';
-import { SubmissionForm } from './components/SubmitTab/SubmissionForm';
 import { RequirementsCard } from './components/SidebarInfo/RequirementsCard';
 import { CriticalFailCard } from './components/SidebarInfo/CriticalFailCard';
 import { POVCard } from './components/SidebarInfo/POVCard';
@@ -26,20 +20,16 @@ import { CaptionExplainerCard } from './components/SidebarInfo/CaptionExplainerC
 import { SubIdeasChips } from './components/SidebarInfo/SubIdeasChips';
 import { HowItsCheckedModal } from './components/Modals/HowItsCheckedModal';
 import { AddThemeModal } from './components/Modals/AddThemeModal';
-import { getThemeById, DEFAULT_THEME_ID, REGIONS } from './themes';
+import { getThemeById, DEFAULT_THEME_ID } from './themes';
 import { AnalysisResponse, ThemeConfig } from './themes/types';
-import { ReelSubmission } from './types';
 
 export function App() {
-  // Top input row state (matches user reference screenshot)
+  // Top input row state (East-West only, Idea to Brand only)
   const [gid, setGid] = useState<string>('973');
   const [selectedRegion, setSelectedRegion] = useState<string>('East-West India (ping)');
   const [selectedThemeId, setSelectedThemeId] = useState<string>(DEFAULT_THEME_ID);
 
-  // Active Tab
-  const [activeTab, setActiveTab] = useState<ActiveTab>('analyze');
-
-  // Tab 1: Analyze states
+  // Analyze states
   const [reelUrl, setReelUrl] = useState<string>('');
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [caption, setCaption] = useState<string>('');
@@ -53,7 +43,6 @@ export function App() {
   const [hasGeminiKey, setHasGeminiKey] = useState<boolean>(false);
   const [isHowItsCheckedOpen, setIsHowItsCheckedOpen] = useState<boolean>(false);
   const [isAddThemeOpen, setIsAddThemeOpen] = useState<boolean>(false);
-  const [submissionCount, setSubmissionCount] = useState<number>(0);
 
   const activeTheme: ThemeConfig = getThemeById(selectedThemeId);
 
@@ -74,18 +63,6 @@ export function App() {
       }
     };
     checkServer();
-  }, []);
-
-  // Update submission count from storage
-  useEffect(() => {
-    try {
-      const history = localStorage.getItem('gsa_reels_submissions_history');
-      if (history) {
-        setSubmissionCount(JSON.parse(history).length);
-      }
-    } catch (e) {
-      console.error(e);
-    }
   }, []);
 
   const handleUseCaptionFromTemplate = (templateWithPlaceholders: string) => {
@@ -246,15 +223,6 @@ export function App() {
     }
   };
 
-  const handleSubmissionSuccess = (submission: ReelSubmission) => {
-    setSubmissionCount(prev => prev + 1);
-  };
-
-  const handleProceedToSubmit = () => {
-    setActiveTab('submit');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen flex flex-col text-slate-800">
       {/* Container */}
@@ -266,7 +234,7 @@ export function App() {
           hasGeminiKey={hasGeminiKey}
         />
 
-        {/* Top Input Row (always visible, feeds both tabs) */}
+        {/* Top Input Row (always visible) */}
         <TopInputCard
           gid={gid}
           onGidChange={setGid}
@@ -278,110 +246,90 @@ export function App() {
           onOpenAddTheme={() => setIsAddThemeOpen(true)}
         />
 
-        {/* Tab Navigation Switcher */}
-        <TabNavigation
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          submissionCount={submissionCount}
-        />
+        {/* Tab pill: Analyze My Reel */}
+        <TabNavigation />
 
         {/* Main Content Layout: Two Columns (Main Work Area + Sidebar Info) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Main Work Area (Left 7 or 8 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-5">
-            {activeTab === 'analyze' ? (
-              <div>
-                {/* 1. Reel Link Input */}
-                <ReelLinkInput
-                  reelUrl={reelUrl}
-                  onUrlChange={setReelUrl}
-                />
+            <div>
+              {/* 1. Reel Link Input */}
+              <ReelLinkInput
+                reelUrl={reelUrl}
+                onUrlChange={setReelUrl}
+              />
 
-                {/* 2. Upload Reel Video */}
-                <VideoDropzone
-                  videoFile={videoFile}
-                  onFileSelect={setVideoFile}
-                />
+              {/* 2. Upload Reel Video */}
+              <VideoDropzone
+                videoFile={videoFile}
+                onFileSelect={setVideoFile}
+              />
 
-                {/* 3. Ideal Caption Template Card */}
-                <CaptionTemplateCard
-                  theme={activeTheme}
-                  gid={gid}
-                  region={selectedRegion}
-                  onUseCaption={handleUseCaptionFromTemplate}
-                />
-
-                {/* 4. Paste Reel Caption */}
-                <CaptionInput
-                  caption={caption}
-                  onCaptionChange={setCaption}
-                  theme={activeTheme}
-                  gid={gid}
-                  region={selectedRegion}
-                />
-
-                {/* 5. Creative Idea Description */}
-                <CreativeIdeaInput
-                  ideaDescription={ideaDescription}
-                  onIdeaChange={setIdeaDescription}
-                />
-
-                {/* Error Banner */}
-                {analysisError && (
-                  <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2 mb-4">
-                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                    <span>{analysisError}</span>
-                  </div>
-                )}
-
-                {/* 6. Analyze Reel Button */}
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={handleAnalyze}
-                    disabled={isAnalyzing}
-                    className="w-full py-3.5 px-6 rounded-2xl font-bold text-base bg-[#1A73E8] hover:bg-[#1557B0] disabled:bg-slate-300 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2.5 cursor-pointer"
-                  >
-                    {isAnalyzing ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        <span>Evaluating Reel Compliance with Gemini 2.5 Flash...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5 text-amber-300" />
-                        <span>Analyze Reel</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {/* Analysis Results Display */}
-                {analysisResults && (
-                  <div id="analysis-results-section">
-                    <AnalysisResults
-                      results={analysisResults}
-                      onProceedToSubmit={handleProceedToSubmit}
-                      onReAnalyze={handleAnalyze}
-                    />
-                  </div>
-                )}
-              </div>
-            ) : (
-              /* Tab 2: Submit a Reel */
-              <SubmissionForm
+              {/* 3. Ideal Caption Template Card */}
+              <CaptionTemplateCard
+                theme={activeTheme}
                 gid={gid}
                 region={selectedRegion}
-                theme={activeTheme}
-                initialCaption={caption}
-                initialReelUrl={reelUrl}
-                initialVideoFileName={videoFile ? videoFile.name : undefined}
-                initialIdeaDescription={ideaDescription}
-                analysisScore={analysisResults?.score}
-                overallVerdict={analysisResults?.overallVerdict}
-                onSubmissionSuccess={handleSubmissionSuccess}
+                onUseCaption={handleUseCaptionFromTemplate}
               />
-            )}
+
+              {/* 4. Paste Reel Caption */}
+              <CaptionInput
+                caption={caption}
+                onCaptionChange={setCaption}
+                theme={activeTheme}
+                gid={gid}
+                region={selectedRegion}
+              />
+
+              {/* 5. Creative Idea Description */}
+              <CreativeIdeaInput
+                ideaDescription={ideaDescription}
+                onIdeaChange={setIdeaDescription}
+              />
+
+              {/* Error Banner */}
+              {analysisError && (
+                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2 mb-4">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  <span>{analysisError}</span>
+                </div>
+              )}
+
+              {/* 6. Analyze Reel Button */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={handleAnalyze}
+                  disabled={isAnalyzing}
+                  className="w-full py-3.5 px-6 rounded-2xl font-bold text-base bg-[#1A73E8] hover:bg-[#1557B0] disabled:bg-slate-300 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+                >
+                  {isAnalyzing ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Evaluating Reel Compliance with Gemini 2.5 Flash...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-5 h-5 text-amber-300" />
+                      <span>Analyze Reel</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Analysis Results Display */}
+              {analysisResults && (
+                <div id="analysis-results-section">
+                  <AnalysisResults
+                    results={analysisResults}
+                    onReAnalyze={handleAnalyze}
+                    captionToCopy={caption}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Sidebar / Below-form Info Panel (Right 4 or 5 cols) */}

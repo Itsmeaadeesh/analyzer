@@ -16,16 +16,16 @@ import { AnalysisResponse } from '../../themes/types';
 
 interface AnalysisResultsProps {
   results: AnalysisResponse;
-  onProceedToSubmit: () => void;
-  onReAnalyze: () => void;
+  onReAnalyze?: () => void;
+  captionToCopy?: string;
 }
 
 export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
   results,
-  onProceedToSubmit,
-  onReAnalyze,
+  captionToCopy,
 }) => {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
+  const [copied, setCopied] = useState(false);
 
   const toggleExpand = (id: number) => {
     setExpandedItems(prev => ({
@@ -46,6 +46,17 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
       });
     }
   }, [isPass]);
+
+  const handleCopyCaption = async () => {
+    if (!captionToCopy) return;
+    try {
+      await navigator.clipboard.writeText(captionToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="mt-8 space-y-5 animate-in fade-in duration-300">
@@ -75,14 +86,15 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={onProceedToSubmit}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl font-bold text-sm bg-[#1A73E8] hover:bg-[#1557B0] text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 shrink-0"
-            >
-              <Send className="w-4 h-4" />
-              <span>Submit this Reel Now →</span>
-            </button>
+            {captionToCopy && (
+              <button
+                type="button"
+                onClick={handleCopyCaption}
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold text-xs bg-[#137333] hover:bg-[#0D652D] text-white shadow-sm transition-all flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <span>{copied ? '✓ Copied Caption!' : 'Copy Caption for Instagram'}</span>
+              </button>
+            )}
           </div>
         </div>
       ) : (
