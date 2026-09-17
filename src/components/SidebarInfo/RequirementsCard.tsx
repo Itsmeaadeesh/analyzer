@@ -19,7 +19,7 @@ export const RequirementsCard: React.FC<RequirementsCardProps> = ({
             <ListChecks className="w-3.5 h-3.5" />
           </div>
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-            Reel Requirements (10-Point Checklist)
+            Reel Requirements (8-Point Checklist)
           </h4>
         </div>
         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#1A73E8] border border-blue-100">
@@ -28,7 +28,7 @@ export const RequirementsCard: React.FC<RequirementsCardProps> = ({
       </div>
 
       <p className="text-xs text-slate-500 mb-3">
-        Every reel submitted must check all 10 requirements to qualify for ambassador scoring.
+        Every reel submitted must check all 8 requirements to qualify for ambassador scoring.
       </p>
 
       <ol className="space-y-2.5">

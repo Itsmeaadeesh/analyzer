@@ -36,15 +36,6 @@ GID - {GID}
   requirements: [
     {
       id: 1,
-      title: "Random idea → real, visualized brand clearly shown",
-      description: "Demonstrates the complete journey from a raw concept into a tangible, distinct brand identity.",
-      checkType: 'combined',
-      isCritical: false,
-      failMessage: "The brand transformation is incomplete or abstract. No clear final product/brand shown.",
-      fixSuggestion: "Clearly show what the brand is (e.g. coffee brand, tech startup, apparel line) from concept to finished identity."
-    },
-    {
-      id: 2,
       title: "Gemini chat/build process is shown (name, tagline, what's being sold, what's different)",
       description: "You must display the actual Gemini interaction crafting the name, tagline, product pitch, and USP.",
       checkType: 'combined',
@@ -53,7 +44,7 @@ GID - {GID}
       fixSuggestion: "Show the screen recording or step-by-step chat where Gemini brainstormed your brand name, tagline, and value proposition."
     },
     {
-      id: 3,
+      id: 2,
       title: "Nano Banana visual reveal included (logo, poster, packaging, etc.)",
       description: "Must feature Nano Banana generating the visual creative assets for the brand.",
       checkType: 'combined',
@@ -62,7 +53,7 @@ GID - {GID}
       fixSuggestion: "Include the prompt and generation reveal in Nano Banana showing your logo, merchandise, or product mockup."
     },
     {
-      id: 4,
+      id: 3,
       title: "\"Free for students\" / Google AI Plus offer said out loud, not buried",
       description: "The audio voiceover or on-camera speaker must clearly verbalize the Google AI Plus student offer.",
       checkType: 'combined',
@@ -71,7 +62,7 @@ GID - {GID}
       fixSuggestion: "Say out loud: 'Google AI Plus is free for students right now!' and reinforce it with text overlay."
     },
     {
-      id: 5,
+      id: 4,
       title: "A specific Gemini feature is identifiable",
       description: "Highlight a named Gemini capability (e.g., Deep Research, Multi-modal analysis, Canvas, Image gen).",
       checkType: 'combined',
@@ -80,16 +71,7 @@ GID - {GID}
       fixSuggestion: "Explicitly name and show the Gemini feature you used (e.g., Canvas, Fast brainstorming, Multimodal reasoning)."
     },
     {
-      id: 6,
-      title: "Creative idea description is specific, not vague",
-      description: "Vague descriptions like 'true' or 'AI video' are strictly rejected.",
-      checkType: 'idea',
-      isCritical: false,
-      failMessage: "The idea description is too vague or generic (e.g., 'made an AI video').",
-      fixSuggestion: "Provide 1-2 detailed sentences explaining your exact brand concept, what problem it solves, and the creative spin."
-    },
-    {
-      id: 7,
+      id: 5,
       title: "GID appears in the caption",
       description: "Your official Google Student Ambassador ID (GID) must be written in the caption.",
       checkType: 'caption',
@@ -98,7 +80,7 @@ GID - {GID}
       fixSuggestion: "Add 'GID - [Your ID]' clearly in the caption text."
     },
     {
-      id: 8,
+      id: 6,
       title: "Tags @GoogleIndia, @Googlegemini, @GoogleGeminiIndia",
       description: "All three official handles must be accurately tagged in the caption.",
       checkType: 'caption',
@@ -107,7 +89,7 @@ GID - {GID}
       fixSuggestion: "Ensure your caption includes: @GoogleIndia, @Googlegemini, and @GoogleGeminiIndia."
     },
     {
-      id: 9,
+      id: 7,
       title: "Hashtags #GoogleStudentAmbassador #GSA2026 #TeamGemini present",
       description: "All core GSA campaign hashtags must be present in the caption.",
       checkType: 'caption',
@@ -116,7 +98,7 @@ GID - {GID}
       fixSuggestion: "Include #GoogleStudentAmbassador #GSA2026 #TeamGemini in your caption."
     },
     {
-      id: 10,
+      id: 8,
       title: "Regional hashtag #ping_mcn present (East-West India)",
       description: "Must include #ping_mcn for the designated East-West India (ping) region.",
       checkType: 'caption',

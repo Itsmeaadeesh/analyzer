@@ -68,10 +68,9 @@ export const HowItsCheckedModal: React.FC<HowItsCheckedModalProps> = ({
               Gemini 2.5 Flash Server-Side Evaluation
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              When you click <strong>Analyze Reel</strong>, your submission is evaluated against the 10 Pillar #2 requirements via a secure server endpoint using Google's Gemini 2.5 Flash model:
+              When you click <strong>Analyze Reel</strong>, your submission is evaluated against the 8 official Pillar #2 requirements via a secure server endpoint using Google's Gemini 2.5 Flash model:
             </p>
             <ul className="mt-2.5 space-y-1.5 text-xs text-slate-600 pl-4 list-disc">
-              <li><strong>Content Verification:</strong> Confirms your creative concept describes a tangible brand rather than a generic summary.</li>
               <li><strong>Chat & Prompt Verification:</strong> Checks for evidence of interactive Gemini brainstorming (naming, tagline, value proposition).</li>
               <li><strong>Visual Reveal Verification:</strong> Confirms the Nano Banana design reveal is integrated.</li>
               <li><strong>Audio/Vocal Check:</strong> Confirms the "Free for students" Google AI Plus benefit is clearly vocalized.</li>
