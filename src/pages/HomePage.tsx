@@ -9,7 +9,9 @@ import {
   Flame, 
   Bot, 
   HelpCircle,
-  Hash
+  Hash,
+  Award,
+  ExternalLink
 } from 'lucide-react';
 import { LinkedInIcon } from '../components/Common/LinkedInIcon';
 import { useGsaSettings } from '../context/GsaContext';
@@ -62,12 +64,12 @@ export const HomePage: React.FC = () => {
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
-            Your all-in-one compliance checker, writing coach, and submission hub for Google Student Ambassador content milestones.
+            Your all-in-one compliance checker, writing coach, certificate generator, and submission hub for Google Student Ambassador milestones.
           </p>
         </div>
 
-        {/* Two Large Task Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+        {/* Task & Utility Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Card 1: Task 2 — Reels Studio */}
           <div 
             onClick={() => navigate('/reels')}
@@ -169,10 +171,64 @@ export const HomePage: React.FC = () => {
               <ArrowRight className="w-4 h-4 transition-all" />
             </button>
           </div>
+
+          {/* Card 3: Certificate Generator */}
+          <div 
+            onClick={() => window.open('https://mp-gsa-cert-gen.lovable.app', '_blank', 'noopener,noreferrer')}
+            className="group relative bg-white rounded-3xl border-2 border-slate-200/90 hover:border-[#34A853] p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1"
+          >
+            <div className="absolute -top-3 right-6 bg-[#34A853] text-white text-[11px] font-bold px-3 py-0.5 rounded-full shadow-sm uppercase tracking-wide">
+              Certificates
+            </div>
+
+            <div>
+              <div className="w-14 h-14 rounded-2xl bg-[#E6F4EA] border border-[#CEEAD6] flex items-center justify-center mb-5 text-[#188038] group-hover:bg-[#188038] group-hover:text-white transition-colors duration-300">
+                <Award className="w-7 h-7" />
+              </div>
+
+              <div className="text-xs font-bold text-[#188038] uppercase tracking-wider mb-1">
+                Ambassador Utilities
+              </div>
+
+              <h2 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#188038] transition-colors">
+                Certificate Generator
+              </h2>
+
+              <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                Generate Participation and Freshers' Party Champion certificates for your Google Student Ambassador events with high-res export.
+              </p>
+
+              <div className="space-y-2 mb-6 text-xs text-slate-700 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Participation & Freshers' Party Champion formats</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Single custom generator & bulk batch export (ZIP)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Instant preview, signing & device history dashboard</span>
+                </div>
+              </div>
+            </div>
+
+            <a 
+              href="https://mp-gsa-cert-gen.lovable.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-full py-3 px-4 bg-[#188038] hover:bg-[#137333] text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-emerald-700/20 flex items-center justify-center gap-2 group-hover:gap-3"
+            >
+              <span>Open Certificate Generator</span>
+              <ExternalLink className="w-4 h-4 transition-all" />
+            </a>
+          </div>
         </div>
 
         {/* Playbook Info Strip */}
-        <div className="mt-14 max-w-4xl mx-auto bg-[#EEF4FE]/50 border border-[#D2E3FC] rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-14 max-w-6xl mx-auto bg-[#EEF4FE]/50 border border-[#D2E3FC] rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-10 h-10 rounded-xl bg-white border border-[#D2E3FC] flex items-center justify-center text-[#1A73E8] shrink-0">
               <Sparkles className="w-5 h-5" />
